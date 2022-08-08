@@ -8,4 +8,5 @@ $token = getAuthToken();
 $r = $users->getUserInfoByToken($token);
 if (!$r) sendError('Invalid Token');
 $brokers = new Brokers();
-sendSuccess($brokers->getBrokers());
+$res = $brokers->getBrokers();
+sendSuccess($res);
