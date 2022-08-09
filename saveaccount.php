@@ -22,7 +22,7 @@ if(isset($rowdata['params']) && count($rowdata['params'])){
 	$rows['config'] = '';
 }
 if($id){
-	$where = ["id='$id'"];
+	$where = ["account_id='$id'"];
 	$resp = $accounts->updateAccount($rows,$where);
 }else{
 	$rows['code'] = $accounts->getCode();
