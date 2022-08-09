@@ -8,4 +8,10 @@ $token = getAuthToken();
 $r = $users->getUserInfoByToken($token);
 if (!$r) sendError('Invalid Token');
 $accounts = new Accounts();
-sendSuccess($accounts->getAccounts());
+$res = $accounts->getAccounts();
+$result = [];
+foreach($res as $k=>$v) {
+	$v['config'] = json_decode($v['config']);
+	$result[] = $v;
+}
+sendSuccess($result);
