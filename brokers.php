@@ -9,4 +9,9 @@ $r = $users->getUserInfoByToken($token);
 if (!$r) sendError('Invalid Token');
 $brokers = new Brokers();
 $res = $brokers->getBrokers();
-sendSuccess($res);
+$result = [];
+foreach($res as $k=>$v) {
+	$v['params'] = json_decode($v['params']);
+	$result[] = $v;
+}
+sendSuccess($result);

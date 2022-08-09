@@ -16,7 +16,7 @@ $rows['name'] = $rowdata['name'];
 $rows['auth_type'] = $rowdata['auth_type'];
 $rows['path'] = $rowdata['path'];
 if(isset($rowdata['params']) && count($rowdata['params'])){
-	$rows['params'] = addslashes(json_encode($rowdata['params']));
+	$rows['params'] = stripslashes(json_encode($rowdata['params']));
 }else{
 	$rows['params'] = '';
 }
