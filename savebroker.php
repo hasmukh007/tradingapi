@@ -21,6 +21,7 @@ if(isset($rowdata['params']) && count($rowdata['params'])){
 	$rows['params'] = '';
 }
 if($id){
+	$rows['status'] = $rowdata['status'];
 	$where = ["broker_id='$id'"];
 	$resp = $brokers->updateBroker($rows,$where);
 }else{

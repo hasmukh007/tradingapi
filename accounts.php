@@ -12,6 +12,7 @@ $res = $accounts->getAccounts();
 $result = [];
 foreach($res as $k=>$v) {
 	$v['config'] = json_decode($v['config']);
+	$v['params'] = json_decode($v['params']);
 	$result[] = $v;
 }
 sendSuccess($result);

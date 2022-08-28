@@ -22,6 +22,7 @@ if(isset($rowdata['params']) && count($rowdata['params'])){
 	$rows['config'] = '';
 }
 if($id){
+	$rows['status'] = $rowdata['status'];
 	$where = ["account_id='$id'"];
 	$resp = $accounts->updateAccount($rows,$where);
 }else{

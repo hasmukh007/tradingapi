@@ -18,6 +18,8 @@ $clients = new Clients();
 if(!$data['client_code']) {
 	$client_code = $clients->generateClientCode();
 	$rowdata['client_code'] = $client_code;
+}else{
+	$rowdata['status'] = $data['status'];
 }
 $rowdata['name'] = $data['name'];
 $rowdata['email'] = $data['email'];
