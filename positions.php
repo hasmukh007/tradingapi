@@ -25,10 +25,11 @@ foreach($result as $cl=>$arr){
 	$sub = [];	
 	foreach($arr as $r){
 		if(!isset($sub['client_id'])){
-			$sub['client_id'] = $v['client_id'];
-			$sub['account_id'] = $v['account_id'];
-			$sub['client_name'] = $v['client_name'];
-			$sub['account_name'] = $v['account_name'];
+			$sub['client_id'] = $r['client_id'];
+			$sub['account_id'] = $r['account_id'];
+			$sub['client_name'] = $r['client_name'];
+			$sub['account_name'] = $r['account_name'];
+			$sub['total'] = 0;
 		}		
 		$subpos = [];
 		$subpos['symbol'] = $r['symbol'];
@@ -37,6 +38,7 @@ foreach($result as $cl=>$arr){
 		$subpos['remQty'] = $r['remQty'];
 		$subpos['buyAmt'] = $r['buyAmt'];
 		$subpos['sellAmt'] = $r['sellAmt'];
+		$subpos['price'] = 0;
 		$sub['positions'][] = $subpos;
 	}
 	$finalArr[] = $sub;
