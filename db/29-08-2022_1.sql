@@ -1,1 +1,2 @@
 ALTER TABLE `orders` CHANGE `date` `date` DATE NOT NULL, CHANGE `time` `time` TIME NOT NULL;
+ALTER TABLE `orders` CHANGE `symbol` `symbol` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
