@@ -1,0 +1,1 @@
+ALTER TABLE `orders` CHANGE `date` `date` DATE NOT NULL, CHANGE `time` `time` TIME NOT NULL;
