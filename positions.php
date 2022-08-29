@@ -15,9 +15,30 @@ $res = $orders->getOrderPositions($date);
 $result = [];
 foreach($res as $k=>$v) {
 	$remQty = $v['buyQty']-$v['sellQty'];
-	if($remQty>0){
-		$v['remQty'] = $remQty;
-		$result[] = $v;
+	if($remQty>0){		
+		$v['remQty'] = $remQty;		
+		$result[$v['account_id']][] = $v;
 	}
 }
-sendSuccess($result);
+$finalArr = [];
+foreach($result as $ac=>$arr){	
+	$sub = [];	
+	foreach($arr as $r){
+		if(!isset($sub['client_id'])){
+			$sub['client_id'] = $v['client_id'];
+			$sub['account_id'] = $v['account_id'];
+			$sub['client_name'] = $v['client_name'];
+			$sub['account_name'] = $v['account_name'];
+		}		
+		$subpos = [];
+		$subpos['symbol'] = $r['symbol'];
+		$subpos['buyQty'] = $r['buyQty'];
+		$subpos['sellQty'] = $r['sellQty'];
+		$subpos['remQty'] = $r['remQty'];
+		$subpos['buyAmt'] = $r['buyAmt'];
+		$subpos['sellAmt'] = $r['sellAmt'];
+		$sub['positions'][] = $subpos;
+	}
+	$finalArr[] = $sub;
+}
+sendSuccess($finalArr);
