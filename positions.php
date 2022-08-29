@@ -17,11 +17,11 @@ foreach($res as $k=>$v) {
 	$remQty = $v['buyQty']-$v['sellQty'];
 	if($remQty>0){		
 		$v['remQty'] = $remQty;		
-		$result[$v['account_id']][] = $v;
+		$result[$v['client_id']][] = $v;
 	}
 }
 $finalArr = [];
-foreach($result as $ac=>$arr){	
+foreach($result as $cl=>$arr){	
 	$sub = [];	
 	foreach($arr as $r){
 		if(!isset($sub['client_id'])){
