@@ -20,6 +20,7 @@ foreach($res as $r){
 	$sub['account_id'] = $r['account_id'];
 	$sub['client_name'] = $r['client_name'];
 	$sub['account_name'] = $r['name'];
+	$sub['positions'] = [];
 	$finalArr[] = $sub;
 }
 sendSuccess($finalArr);
