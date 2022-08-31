@@ -5,8 +5,8 @@ require(__DIR__ . '/../model/orders.model.php');
 
 $orders = new Orders();
 
-$sdt = '2022-08-29';
-$edt = '2022-08-29';
+$sdt = date('Y-m-d');
+$edt = date('Y-m-d');
 $res = $orders->getOrderReports($sdt,$edt);
 $clArr = getOrderReports($res);
 
