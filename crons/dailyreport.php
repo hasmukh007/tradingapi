@@ -11,11 +11,12 @@ $res = $orders->getOrderReports($sdt,$edt);
 $clArr = getOrderReports($res);
 
 $accountHtml = '';
+$overallPL = 0;
 $result = [];
 $emailArr = [];
 foreach($clArr as $cl=>$rs){
 	$emailArr[$rs['email']] = $rs['account_name'];
-	$innerHtml = '<table cellpadding="2" cellspacing="2" border="1" role="presentation" style="max-width: 1100px; background: #151515; margin-bottom:10px;" class="px-3per">
+	$innerHtml = '<table cellpadding="2" cellspacing="2" border="1" role="presentation" style="max-width: 100%; width:100%; margin-bottom:30px;">
 		<tr>
 			<th>Date/Time</th>
 			<th>Order ID</th>
@@ -40,21 +41,23 @@ foreach($clArr as $cl=>$rs){
 				<td>'.$ord['order_id'].'</td>
 				<td>'.$ord['symbol'].'</td>
 				<td>'.$ord['side'].'</td>
-				<td>'.$ord['qty'].'</td>
-				<td>'.$ord['price'].'</td>
-				<td>'.$ord['charges'].'</td>
+				<td style="text-align:right">'.$ord['qty'].'</td>
+				<td style="text-align:right">'.$ord['price'].'</td>
+				<td style="text-align:right">'.$ord['charges'].'</td>
 		  </tr>';
 	}	
 	$innerHtml .= '</table>';
 	$rs['date_disp'] = $dateDisp;
-	$rs['pl'] = ($sell-$buy)-$charges;
+	$pl = ($sell-$buy)-$charges;
+	$overallPL += $pl;
+	$rs['pl'] = $pl;
 	$result[] = $rs;
-	$accountHtml .= '<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="max-width: 1100px; background: #151515; margin-bottom:10px;" class="px-3per">
+	$accountHtml .= '<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="max-width: 100%; width:100%; margin-bottom:10px;">
 		<tr>
-			<td class="p-30 pb-5">
+			<td class="pb-5 " style="font-size: 18px;">
 			'.$rs['account_name'].' ('.$rs['client_name'].')
 			</td>
-			<td class="p-30 pb-5 text-right">
+			<td class="pb-5 " style="font-size: 20px; text-align:right">
 			'.$rs['pl'].'
 			</td>
 		  </tr>
@@ -121,26 +124,18 @@ $mailHtml = '
     </style>
 </head>
 <body>
-    <table cellpadding="2" cellspacing="2" border="0" role="presentation" style="width: 100%; height: 100%; background: #000;">
+    <table cellpadding="2" cellspacing="2" border="0" role="presentation" style="width: 100%; height: 100%; background: #000; border: 0px; padding:10px;">        
         <tr>
-            <td class="w-full h-20">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="w-full h-full v-top" align="center">
+            <td class="w-full h-full v-top">
                 <div class="w-full h-full">
-                    <table cellpadding="2" cellspacing="2" border="0" role="presentation" style="max-width: 1100px; background: #151515;" class="px-3per">
-                        <tr>
-                            <td class="p-30 pb-5">
-							Hi, this is a daily basis report of your profit/loss
-                            </td>
-                        </tr>
-                    </table>
+                    <p>Hi,</p> 
+					<p>Daily Profit/Loss Statement</p>
 '.$accountHtml.'                    
                 </div>
             </td>
         </tr>
         <tr>
-            <td class="w-full h-20">&nbsp;</td>
+            <td class="w-full h-20" style="font-size: 20px;">Daily Overall(all accounts) Profit/Loss: '.$overallPL.'</td>
         </tr>
     </table>
 </body>
@@ -150,8 +145,10 @@ $body = $mailHtml;
 $subject = 'Daily Trading Report- '.$sdt;
 
 sendEmail('meetsushant248@gmail.com', $subject, $body, 'Sushanta Mahanty');
+
 /*
 foreach($emailArr as $to=>$toName){
 	sendEmail($to, $subject, $body, $toName = '');
 }
 */
+?>
