@@ -56,7 +56,7 @@ function sendEmail($to, $subject, $body, $toName = '')
 
     try {
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = SMTP;                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -73,13 +73,35 @@ function sendEmail($to, $subject, $body, $toName = '')
         // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
 
         //Content
-        $mail->isHTML(false);                                  //Set email format to HTML
+        $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = $subject;
         $mail->Body    = $body;
         // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
         $mail->send();
+		return '';
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
+}
+function getOrderReports($res){
+	$clArr = [];
+	foreach($res as $r){
+		if($r['status']=='closed'){
+			$cid = $r['client_id'];
+			$acid = $r['account_id'];
+			$cname = $r['client_name'];
+			$aname = $r['account_name'];		
+			if(!isset($clArr[$acid])){
+				$clArr[$acid]['client_id'] = $cid;
+				$clArr[$acid]['client_name'] = $cname;
+				$clArr[$acid]['account_id'] = $acid;
+				$clArr[$acid]['account_name'] = $aname;			
+				$clArr[$acid]['email'] = $r['email'];
+				$clArr[$acid]['orders'] = [];
+			}	
+			$clArr[$acid]['orders'][] = $r;
+		}
+	}
+	return $clArr;
 }

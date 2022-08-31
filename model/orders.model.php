@@ -19,6 +19,6 @@ class Orders extends Model
 		if($edt==''){
 			$edt = $sdt;
 		}
-		return $this->Query("SELECT Ord.*, A.name as account_name, C.name as client_name from orders as Ord LEFT JOIN accounts as A ON A.account_id=Ord.account_id LEFT JOIN clients as C ON C.client_id=Ord.client_id WHERE Ord.date BETWEEN '".$sdt."' AND '".$edt."'");
+		return $this->Query("SELECT Ord.*, A.name as account_name, C.name as client_name, C.email from orders as Ord LEFT JOIN accounts as A ON A.account_id=Ord.account_id LEFT JOIN clients as C ON C.client_id=Ord.client_id WHERE Ord.date BETWEEN '".$sdt."' AND '".$edt."' ORDER BY date,time");
     }
 }
