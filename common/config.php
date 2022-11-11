@@ -8,7 +8,7 @@ define('SMTP_PORT', '465');
 define('SMTP_SSL', true);
 define('MYSQL_HOST', 'localhost');
 define('MYSQL_USER', 'root');
-define('MYSQL_PASSWORD', 'root');
+define('MYSQL_PASSWORD', '');
 define('MYSQL_DB', 'myalgo');
 define('MAX_REMEMBER', 30);
 define('TOKEN_LENGTH', 40);
